@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        h1 {
+            /* color:brown;
+            text-decoration: underline; */
+            font-size: 60px;
+            text-align: center;
+            border-bottom: black solid 1px;
+            padding-bottom: 20px;
+            margin:0
+        }
+
+        #grid {
+            display:grid;
+            grid-template-columns: 150px 1fr;
+        }
+
+        .left {
+            border-right:black solid 1px;
+            align-items: center;
+        }
+
+        .right {
+            padding-left: 20px;
+        }
+
+        h3 {
+            text-align: center;
+        }
+
+        .contents li {
+            align-items: center;
+            padding-left:0;
+        }
+
+        @media (max-width: 400px){
+            h1 {
+                border: none;
+                font-size: 40px;
+            }
+            .left {
+                border: none;
+                max-width: 150px;
+                margin: auto;
+                
+            }
+
+            #grid {
+                display:inline;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1><a href='WEB.html'>WEB</a></h1>
+    <div id='grid'>
+        <div class='left'>
+            <h3>목차</h3>
+            <ol class='contents'>
+                <li><a href='WEB-HTML.html'>WEB-HTML</a></li>
+                <li><a href='WEB-CSS.html'>WEB-CSS</a></li>
+                <li>추후강좌4</li>
+            </ol>
+        </div>
+
+        <div class='right'>
+            <h2>WEB-CSS 강좌</h2>
+
+            <p>정리할 내용</p>
+
+            <ul>
+                <li>selector(선택자), declaration(선언), property(속성), value(값)에 대하여 정리</li>
+                <li>selector의 적용순서 selector < class< id 에 대한 부연설명</li>
+                <li>새로운 css속성인 그리드 속성 </li>
+                <li> div, span 과 같은 box 속성과 inline속성 태그에 대하여 그리고 css display:를 통해 임의 변경에대하여</li>
+                <li> media query (@media)</li>
+            </ul>
+
+            <ol>
+                <li>css 스타일 적용방법 (strong style='color:red; text-decoration:underline;') </li>
+                <li> head 태그안에 style 태그 적용시키고 그안에 스타일 적용하기 </li>
+                <li>css 파일 생성후 link 태그를 통해서 불러오는 방법</li>
+            </ol>
+
+            <p>웹 페이지의 아름다움에 대한 원리를 탐구한다.<br><strong style='color:red; text-decoration:underline;'>Cascading Style Sheet (CSS).</strong> </p>
+        </div>
+    </div>
+</body>
+</html>
