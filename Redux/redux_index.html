@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.5/redux.min.js" integrity="sha512-P36ourTueX/PrXrD4Auc1kVLoTE7bkWrIrkaM0IG2X3Fd90LFgTRogpZzNBssay0XOXhrIgudf4wFeftdsPDiQ==" crossorigin="anonymous"></script>
+    <title>redux_html</title>
+</head>
+<body>
+    <div id='head'></div>
+    <div id='nav'></div>
+    <div id='control'></div>
+    <div id=article></div>
+
+    <script>
+        function reducer(state, action){
+            console.log(action,state);
+            if (state === undefined) {
+                return {
+                    selected_id:1,
+                    contents:[
+                        {id:1, title:'HTML', desc:'HTML is .......'},
+                        {id:2, title:'CSS', desc:'CSS is .....ㅎㅎㅎ'}
+                    ]
+                }
+            }
+            let newState ;
+            if (action.type ==='SELECT'){
+                newState = Object.assign({}, state, {selected_id:action.id});
+            }
+            console.log(action, state, newState);
+            return newState;
+        }
+        let store = Redux.createStore(reducer);
+      
+
+        function head(){
+            document.querySelector('#head').innerHTML=`
+            <head>
+                <h1>WEB</h1>
+                <p>Hello welcome!</p>
+            </head>`
+        }
+        function nav() {
+
+            let state = store.getState();
+            let list = '';
+            //console.log(state.contents);
+            for (let i=0;i<state.contents.length;i++){
+                list = list+`
+                    <li><a onClick="
+                            event.preventDefault();
+                            let action = {type:'SELECT', id:${state.contents[i].id}};
+                            store.dispatch(action)
+                        " 
+                        href="">${state.contents[i].title}</li>
+                `
+    
+            }
+
+            document.querySelector('#nav').innerHTML=`
+            <nav>
+                <ol>${list}</ol>
+            </nav>`
+        }
+        function control() {
+            document.querySelector('#control').innerHTML=`
+            <ul>
+                <li><input type='button' value='create'/></li>
+                <li><input type='button' value='create'/></li>
+            </ul>`
+        }
+        function article() {
+            let state = store.getState();
+            let aTitle, aDesc;
+            for (let i=0; i<state.contents.length;i++){
+                if (state.contents[i].id === state.selected_id) {
+                    aTitle = state.contents[i].title;
+                    aDesc = state.contents[i].desc;
+                }
+            }
+            document.querySelector('#article').innerHTML=`
+            <article>
+                <h2>${aTitle}</h2>
+                <p>${aDesc}</p>
+            </article>`
+        }
+        store.subscribe(article);
+        head();
+        nav();
+        control();
+        article();
+    </script>
+</body>
+</html>

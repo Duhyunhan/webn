@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ex4.html</title>
+    <script src='../darkmode.js'> // 모듈화를 통해 외부에서 js 파일을 가져오는 방법
+        // let Body = {
+        //     setBodyColor (color) {
+        //         document.querySelector('body').style.backgroundColor = color
+        //     },
+        //     setColor (color) {
+        //         document.querySelector('body').style.color = color
+        //     },
+        // }
+
+        // let List = {
+
+        //     setListColor (color) {
+        //         let list = document.querySelectorAll('a');
+        //         for (i=0; i<list.length; i++){
+        //             list[i].style.color = color
+        //         }
+        //     }
+        // }
+    </script>
+</head>
+<body>
+    <h1><a href='../WEB.html'>WEB</a></h1>
+    <input type="button" value='dark-mode' onclick="
+        document.querySelector('body').style.backgroundColor = 'dimgray'
+        document.querySelector('body').style.color = 'white'
+    "/>
+    <input type="button" value='light-mode' onclick="
+        document.querySelector('body').style.backgroundColor = 'white'
+        document.querySelector('body').style.color = 'black'
+    "/>
+    <!-- 조건문을 적용 -->
+    <!-- <input id='dark-light' type="button" value='dark-mode' onclick="
+            let btnstate = document.getElementById('dark-light');
+        if (btnstate.value ==='dark-mode') {
+            document.querySelector('body').style.backgroundColor = 'dimgray'
+            document.querySelector('body').style.color = 'white'
+            btnstate.value = 'light-mode'
+        }else {
+            document.querySelector('body').style.backgroundColor = 'white'
+            document.querySelector('body').style.color = 'black'
+            btnstate.value = 'dark-mode'
+        }
+    "/> -->
+
+    <!-- 객체의 속성을 가져오는 this를 사용
+    <input id='dark-light' type="button" value='dark-mode' onclick="
+    if (this.value ==='dark-mode') {
+        document.querySelector('body').style.backgroundColor = 'dimgray'
+        document.querySelector('body').style.color = 'white'
+        this.value = 'light-mode'
+        let list = document.querySelectorAll('a');
+        for (i=0; i<list.length; i++){
+           list[i].style.color = 'aquamarine'
+        }
+    }else {
+        document.querySelector('body').style.backgroundColor = 'white'
+        document.querySelector('body').style.color = 'black'
+        this.value = 'dark-mode'
+        let list = document.querySelectorAll('a');
+        for (i=0; i<list.length; i++){
+           list[i].style.color = 'blue'
+        }
+        }
+        "/> -->
+
+        <!-- 객체와 함수를 사용하여 코드 리팩토링을 하였다.  -->
+        <input id='dark-light' type="button" value='dark-mode' onclick="
+        if (this.value ==='dark-mode') {
+            Body.setBodyColor('dimgray');
+            Body.setColor('white')
+            this.value = 'light-mode'
+            List.setListColor('aquamarine');
+        }else {
+            Body.setBodyColor('white')
+            Body.setColor('black')
+            this.value = 'dark-mode'
+            List.setListColor('blue')
+        }
+        "/>
+    
+    <ol>
+        <li><a href='../WEB-HTML.html'>WEB-HTML</a></li>
+        <li><a href='../WEB-CSS.html'>WEB-CSS</a></li>
+        <li><a href='../WEB-JAVASCRIPT.html'>WEB-JAVASCRIPT</a></li>
+    </ol>
+
+    <h2>Javascript</h2>
+
+
+
+    <script>
+        document.write('<h1>fuck you soo ro </h1>')
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEB-JAVASCRIPT</title>
+    <script src='./darkmode.js'></script>
+    <style>
+        ul li a:hover {
+            background-color: rgb(20, 220, 220);
+            border-radius: 10px;
+            padding-bottom:20px;
+        }
+        ul li {
+            height:40px;
+            /* padding-bottom: 10px; */
+        }
+    </style>
+</head>
+<body>
+    <h1><a href='WEB.html'>WEB</a></h1>
+    <input id='dark-light' type="button" value='dark-mode' onclick="
+        if (this.value ==='dark-mode') {
+            Body.setBodyColor('dimgray');
+            Body.setColor('white')
+            this.value = 'light-mode'
+            List.setListColor('aquamarine');
+            List.jsListColor('coral');
+        }else {
+            Body.setBodyColor('white')
+            Body.setColor('black')
+            this.value = 'dark-mode'
+            List.setListColor('blue')
+        }
+        "/>
+
+    <ol>
+        <li><a href='WEB-HTML.html'>WEB-HTML</a></li>
+        <li><a href='WEB-CSS.html'>WEB-CSS</a></li>
+        <li><a href='WEB-JAVASCRIPT.html'>WEB-JAVASCRIPT</a></li>
+    </ol>
+
+    <h2>Javascript</h2>
+
+    <ul>
+        <li><a class='jslist' href="./Javascript_practice/ex1.html">DOM 객체와 Javascript 명령어를 통한 다크모드 구현 </a></li>
+        <li><a class='jslist' href="./Javascript_practice/ex2.html">this 레퍼런스를 통해 간단히 객체 속성 가져오기 </a></li>
+        <li><a class='jslist' href="./Javascript_practice/ex3.html">반복문</a></li>
+        <li><a class='jslist' href="./Javascript_practice/ex4.html">객체와 함수를 사용한 코드 리팩토링</a></li>
+    </ul>
+
+    <p><b>library(도서관) vs framework(프레임워크) 들을 참고하기</b></p>
+
+    
+    
+</body>
+</html>

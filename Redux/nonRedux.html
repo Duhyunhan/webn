@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nonRedux</title>
+    <style>
+        .container {
+            border: black 2px solid;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="red"></div>
+    <div id="blue"></div>
+    <div id="green"></div>
+    <script>
+        function red () {
+            document.querySelector('#red').innerHTML=
+            `
+            <div class='container' id='container_red'>
+                <h1>Red</h1>
+                <input type='button' value='fire' onClick="
+                document.querySelector('#container_red').style.backgroundColor = 'red'
+                document.querySelector('#container_blue').style.backgroundColor = 'red'
+                document.querySelector('#container_green').style.backgroundColor = 'red'
+                "/>
+            </div>
+            `
+        }
+        red();
+
+        function blue () {
+            document.querySelector('#blue').innerHTML=
+            `
+            <div class='container' id='container_blue'>
+                <h1>Blue</h1>
+                <input type='button' value='fire' onClick="
+                document.querySelector('#container_blue').style.backgroundColor = 'blue'
+                document.querySelector('#container_red').style.backgroundColor = 'blue'
+                document.querySelector('#container_green').style.backgroundColor = 'blue'
+                "/>
+            </div>
+            `
+        }
+        blue();
+
+        function green () {
+            document.querySelector('#green').innerHTML=
+            `
+            <div class='container' id='container_green'>
+                <h1>Green</h1>
+                <input type='button' value='fire' onClick="
+                document.querySelector('#container_green').style.backgroundColor = 'green'
+                document.querySelector('#container_red').style.backgroundColor = 'green'
+                document.querySelector('#container_blue').style.backgroundColor = 'green'
+                "/>
+            </div>
+            `
+        }
+        green();
+    </script>
+    <p>redux가 없는 경우 각각의 component 들이 서로의 component 와 state가 연관이 있는 경우<br> component 2승개의 상태관리 코드를 필요로 하며 복잡도가 매우 증가한다. </p>
+</body>
+</html>

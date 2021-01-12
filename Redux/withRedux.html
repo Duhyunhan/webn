@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>withRedux</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.5/redux.min.js" integrity="sha512-P36ourTueX/PrXrD4Auc1kVLoTE7bkWrIrkaM0IG2X3Fd90LFgTRogpZzNBssay0XOXhrIgudf4wFeftdsPDiQ==" crossorigin="anonymous"></script>
+    <style>
+        .container {
+            border: black 2px solid;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h3>Redux 설치방법</h3>
+    <p>npm install --save redux</p>
+
+
+    
+    <div id="red"></div>
+    <div id="blue"></div>
+    <div id="green"></div>
+    <div id="yellow"></div>
+    <script>
+        
+        function reducer(state,action) {
+            if(state === undefined){
+                //초기 state값이 없다면 initialize한다. 
+                return {color: 'yellow'}
+            }
+            if(action.type==='CHANGE_COLOR'){
+               // store.dispatch(action-->반드시 type을 지정해주어야 한다. );// 4. store에서 dispatcher를 통해 action을 받아 새로운 state를 전달
+               let newState = Object.assign({},state,{color:action.color})// state를 리턴 할때는 반드시 새로운 state 객체를 생성하여 할당하라 나중에 다 의미가 있음
+               return newState
+            }
+
+        }// 2. reducer 함수 생성 --> 기존의 state와 action을 받아서 새로운 state를 만든다. 
+        let store = Redux.createStore(reducer); // 1. store 생성 --> 안에 reducer를 집어넣는다. 
+        console.log('store :', store);
+
+
+        function red () {
+            let state = store.getState();// 3. state를 store에서 불러올때는 반드시 getState를 거쳐서 가져온다 날것의 state를 그대로 가져오면 안됨
+            console.log('state: ', state);
+            document.querySelector('#red').innerHTML=
+            `
+            <div class='container' id='container_red' style="background-color:${state.color}"">
+                <h1>Red</h1>
+                <input type='button' value='fire' onClick="
+                    store.dispatch({type:'CHANGE_COLOR', color:'red'});// 4.번 참조 
+                "/>
+            </div>
+            `
+        }
+        store.subscribe(red); // 5. action이 있을때마다 store에서  subscribe를 통해 ui에 반영을 해준다. 
+        red();
+
+        function blue () {
+            let state = store.getState();// 3. state를 store에서 불러올때는 반드시 getState를 거쳐서 가져온다 날것의 state를 그대로 가져오면 안됨
+            console.log('state: ', state);
+            document.querySelector('#blue').innerHTML=
+            `
+            <div class='container' id='container_blue' style="background-color:${state.color}"">
+                <h1>Blue</h1>
+                <input type='button' value='fire' onClick="
+                    store.dispatch({type:'CHANGE_COLOR', color:'blue'});// 4.번 참조 
+                "/>
+            </div>
+            `
+        }
+        store.subscribe(blue);
+        blue();
+
+        function green () {
+            let state = store.getState();// 3. state를 store에서 불러올때는 반드시 getState를 거쳐서 가져온다 날것의 state를 그대로 가져오면 안됨
+            console.log('state: ', state);
+            document.querySelector('#green').innerHTML=
+            `
+            <div class='container' id='container_green' style="background-color:${state.color}"">
+                <h1>Green</h1>
+                <input type='button' value='fire' onClick="
+                    store.dispatch({type:'CHANGE_COLOR', color:'green'});// 4.번 참조 
+                "/>
+            </div>
+            `
+        }
+        store.subscribe(green);
+        green();
+
+        function yellow () {
+            let state = store.getState();// 3. state를 store에서 불러올때는 반드시 getState를 거쳐서 가져온다 날것의 state를 그대로 가져오면 안됨
+            console.log('state: ', state);
+            document.querySelector('#yellow').innerHTML=
+            `
+            <div class='container' id='container_yellow' style="background-color:${state.color}"">
+                <h1>Yellow</h1>
+                <input type='button' value='fire' onClick="
+                    store.dispatch({type:'CHANGE_COLOR', color:'yellow'});// 4.번 참조 
+                "/>
+            </div>
+            `
+        }
+        store.subscribe(yellow);
+        yellow();
+    </script>
+</body>
+</html>
