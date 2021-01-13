@@ -14,25 +14,80 @@
 
     <script>
         function reducer(state, action){
-            console.log(action,state);
+            console.log('reducer() : ', action,state);
             if (state === undefined) {
                 return {
+                    max_id:2,
+                    mode :'READ',
                     selected_id:1,
                     contents:[
                         {id:1, title:'HTML', desc:'HTML is .......'},
                         {id:2, title:'CSS', desc:'CSS is .....ㅎㅎㅎ'}
-                    ]
+                    ],
+                    selected_content:null
                 }
             }
             let newState ;
+            
             if (action.type ==='SELECT'){
-                newState = Object.assign({}, state, {selected_id:action.id});
+                newState = Object.assign({}, state, {selected_id:action.id, mode:'READ'});
             }
-            console.log(action, state, newState);
+
+            else if (action.type ==='create'){
+                newState = Object.assign({},state, {mode:'CREATE'});
+            }
+
+            else if (action.type ==='CREATE'){
+                let maxId = state.max_id+1;
+                let newContents = state.contents.concat()// concat은 배열을 새로 복제 Object.assign({})는 객체를 새로 복제
+                newContents.push({
+                    id: maxId,
+                    title: action.title,
+                    desc: action.desc
+                })
+                newState = Object.assign({},state, {max_id:maxId, mode:'READ',contents: newContents});
+            }
+            else if (action.type ==='DELETE'){
+                let newContents=[];
+                for (let i=0; i<state.contents.length;i++){
+                    if (state.selected_id !== state.contents[i].id){
+                        newContents.push(state.contents[i])
+                    }
+                }
+                newState = Object.assign({},state,{contents:newContents, mode:'welcome'})
+            }
+            else if (action.type ==='update'){
+                let selectedContents=[];
+                for (let i=0; i<state.contents.length;i++){
+                    if (state.selected_id ===state.contents[i].id){
+                        selectedContents.push(state.contents[i])
+                        console.log(selectedContents)
+                        // console.log('부잉:',newContents)
+                    }
+                }
+                 newState = Object.assign({},state,{ mode:'UPDATE', selected_content:selectedContents})
+            }
+
+            else if (action.type === 'UPDATE_DATA'){
+                let newContents = state.contents.concat();
+                for (let i=0; i<state.contents.length; i++){
+                    if (state.selected_id ===state.contents[i].id){
+                        newContents[i].title = action.title;
+                        newContents[i].desc = action.desc;
+                    }
+                }
+                newState = Object.assign({},state,{mode:'READ',contents:newContents})
+            }
+        
+           console.log('이전값확인 : ',action, state, newState);
             return newState;
         }
+
+
+
         let store = Redux.createStore(reducer);
       
+
 
         function head(){
             document.querySelector('#head').innerHTML=`
@@ -41,9 +96,13 @@
                 <p>Hello welcome!</p>
             </head>`
         }
+
+
+
         function nav() {
 
             let state = store.getState();
+            console.log('nav() :', state)
             let list = '';
             //console.log(state.contents);
             for (let i=0;i<state.contents.length;i++){
@@ -53,7 +112,7 @@
                             let action = {type:'SELECT', id:${state.contents[i].id}};
                             store.dispatch(action)
                         " 
-                        href="">${state.contents[i].title}</li>
+                        href="">${state.contents[i].title}</a></li>
                 `
     
             }
@@ -63,33 +122,92 @@
                 <ol>${list}</ol>
             </nav>`
         }
+
+
+
         function control() {
             document.querySelector('#control').innerHTML=`
             <ul>
-                <li><input type='button' value='create'/></li>
-                <li><input type='button' value='create'/></li>
+                <li><input onclick="
+                    store.dispatch({type:'create'})
+                    " type='button' value='create'/></li>
+                <li><input onclick="
+                        store.dispatch({type:'DELETE'})
+                    " 
+                    type='button' value='delete'/></li>
+                <li><input onclick=" 
+                    store.dispatch({type:'update'})
+                    "type='button' value='update'/></li>
             </ul>`
         }
         function article() {
             let state = store.getState();
-            let aTitle, aDesc;
-            for (let i=0; i<state.contents.length;i++){
-                if (state.contents[i].id === state.selected_id) {
-                    aTitle = state.contents[i].title;
-                    aDesc = state.contents[i].desc;
+            console.log('article()파트 :', state)
+            if (state.mode==='CREATE'){
+                document.querySelector('#article').innerHTML=`
+                <article>
+                    <form onsubmit='
+                        event.preventDefault()
+                        let _title = this.title.value
+                        let _desc = this.desc.value
+                        console.log("onsubmit :", _title)
+                        store.dispatch({type:"CREATE", title:_title, desc:_desc });
+                    '>
+                        <h2>Create</h2>
+                        <p><input type='text' name=title placeholder='title' /></p>
+                        <p><textarea name='desc' placeholder='desc......'></textarea></p>
+                        <p><input type='submit' value='submit'  ></p>
+                    </form>
+                </article>`
+
+            }else if (state.mode ==='READ'){
+                let aTitle, aDesc;
+                for (let i=0; i<state.contents.length;i++){
+                    if (state.contents[i].id === state.selected_id) {
+                        aTitle = state.contents[i].title;
+                        aDesc = state.contents[i].desc;
+                    }
                 }
+                document.querySelector('#article').innerHTML=`
+                <article>
+                    <h2>${aTitle}</h2>
+                    <p>${aDesc}</p>
+                </article>`
+            } else if (state.mode ==='welcome'){
+                document.querySelector('#article').innerHTML=`
+                <article>
+                    <h2>Welcome!!!</h2>
+                    <p>ㅎㅎㅎㅎㅎㅎ</p>
+                </article>`
+            } 
+            else if (state.mode ==='UPDATE'){
+               console.log('Qn',state.selected_content[0].desc);
+                document.querySelector('#article').innerHTML=`
+                <article>
+                    <form onsubmit='
+                        event.preventDefault()
+                        let _title = this.title.value
+                        let _desc = this.desc.value
+                        console.log("onsubmit :", _title)
+                        store.dispatch({type:"UPDATE_DATA", title:_title, desc:_desc });
+                    '>
+                        <h2>Update</h2>
+                        <p><input type='text' name=title value='${state.selected_content[0].title}' /></p>
+                        <p><textarea name='desc'>${state.selected_content[0].desc}</textarea></p>
+                        <p><input type='submit' value='update'  ></p>
+                    </form>
+                </article>`
             }
-            document.querySelector('#article').innerHTML=`
-            <article>
-                <h2>${aTitle}</h2>
-                <p>${aDesc}</p>
-            </article>`
+
         }
         store.subscribe(article);
+        store.subscribe(nav);
+
         head();
         nav();
         control();
         article();
     </script>
+    <input type='button' value='aaa' onclick="alert('aaa')"/>
 </body>
 </html>
